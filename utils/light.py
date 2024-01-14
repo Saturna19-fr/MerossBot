@@ -47,4 +47,15 @@ async def setLightStatus(lightuuid, status):
         await device.async_turn_on(channel=0)
     else:
         await device.async_turn_off(channel=0)
-    return 
+    return
+
+async def setLightColor(lightuuid, colorRGB):
+    await define()
+    light = await manager.async_device_discovery(meross_device_uuid=lightuuid)
+    if len(light) < 1:
+        return False
+    device = light[0]
+    await device.async_update()
+    
+    await device.async_set_light_color(rgb = colorRGB)
+    return

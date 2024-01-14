@@ -1,8 +1,9 @@
-from interactions import Extension, Client, slash_command, slash_option, slash_bool_option, SlashContext, OptionType, Button, ButtonStyle, component_callback, File, SlashCommandChoice
+from interactions import Extension, Client, slash_command, slash_option, slash_bool_option, SlashContext, OptionType, Button, ButtonStyle, component_callback, File, BaseContext, SlashCommandChoice
 from utils.light import setLightStatus, getInformationsOfLight, setLightColor
 from utils.embeds import create_success_embed, new_embed, create_error_embed
 from webcolors import rgb_to_name
 from os import remove
+from datetime import datetime
 from PIL import Image
 from deep_translator import GoogleTranslator
 
@@ -11,7 +12,18 @@ from asyncio import sleep
 class MyExtension(Extension):
     def __init__(self, client):
         self.client: Client = client
+        self.add_ext_check(self.heurecheck)
 
+    @staticmethod
+    async def heurecheck(context: BaseContext):
+        now = datetime.now()
+        print(now.hour)
+        if now.hour >=22 or now.hour <=7:
+            print('returning false')
+            return False
+        return True
+
+    
     @slash_command(name="setlight", description="Change le statut de la lumière")
     @slash_option(description="Allumée", required=True, name="on", opt_type=OptionType.BOOLEAN)
     async def setlight(self, ctx:SlashContext, on: bool):
@@ -64,6 +76,8 @@ class MyExtension(Extension):
         if option == "rgb":
             try:
                 rgbval = tuple(int(val) for val in valeur.split(' '))
+                if len(rgbval) < 3:
+                    return await ctx.send(embeds=[create_error_embed(f"Vous n'avez pas passé assez de nombres dans la valeur du RGB (3 nombres sont attendus).\nVous avez entré: `{valeur}`")])
             except Exception as e:
                 return ctx.send(embeds=[create_error_embed(f"Une erreur de conversion a eu lieu. `({type(e)})`")])
             await setLightColor("2009100001005090829048e1e931c89a", rgbval)

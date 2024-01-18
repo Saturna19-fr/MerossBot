@@ -9,7 +9,6 @@ from meross_iot.manager import MerossManager
 EMAIL = os.environ.get('MEROSS_EMAIL')
 PASSWORD = os.environ.get('MEROSS_PASSWORD')
 
-color = []
 http_api_client = None
 manager = None
 async def define():
@@ -39,8 +38,12 @@ async def getInformationsOfLight(lightuuid):
 async def setLightStatus(lightuuid, status):
     await define()
     light = await manager.async_device_discovery(meross_device_uuid=lightuuid)
-    if len(light) < 1:
+    print(len(light))
+    print(light)
+    if len(light) < 1 and light[0] != None:
+        print('No light')
         return False
+    print(light[0])
     device = light[0]
     await device.async_update()
     if status == True:
@@ -52,7 +55,9 @@ async def setLightStatus(lightuuid, status):
 async def setLightColor(lightuuid, colorRGB):
     await define()
     light = await manager.async_device_discovery(meross_device_uuid=lightuuid)
+    print(len(light))
     if len(light) < 1:
+        print('No light')
         return False
     device = light[0]
     await device.async_update()

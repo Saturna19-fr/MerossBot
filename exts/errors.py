@@ -19,7 +19,7 @@ class ErrorHandler(Extension):
         print(Fore.GREEN, event.error.args, Fore.RESET)
         traceback.print_exception(event.error)
         if not event.ctx.responded:
-            await event.ctx.send("Something went wrong.")
+            await event.ctx.send("Une erreur s'est produite.", ephemeral=True)
             
             
 

@@ -18,13 +18,11 @@ class MyExtension(Extension):
         self.logs = Logger(self.client, 1196038073897734164)
 
     @staticmethod
-    async def heurecheck(context: BaseContext):
-        print(context)
-        print(type(context))
+    async def heurecheck(context: SlashContext):
         now = datetime.now()
         print(now.hour)
-        if now.hour >= 15 or now.hour <= 7:
-            await context.message.reply('Chef, il est tard, laisse moi dormir en paix...')
+        if now.hour >= 22 or now.hour <= 7:
+            await context.send('Chef, il est tard, laisse moi dormir en paix...')
             return False
         return True
 

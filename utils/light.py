@@ -1,6 +1,4 @@
-import asyncio
 import os
-from random import randint
 from dotenv import load_dotenv
 load_dotenv()
 from meross_iot.http_api import MerossHttpClient

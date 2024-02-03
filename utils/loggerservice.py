@@ -1,4 +1,4 @@
-from interactions import Client, Extension
+from interactions import Client
 from utils.embeds import new_embed
 class Logger():
     def __init__(self, client, channel = 0):
@@ -19,5 +19,5 @@ class Logger():
 
         
 
-def setup(client):
+def setup(client, channel):
     Logger(client, channel)

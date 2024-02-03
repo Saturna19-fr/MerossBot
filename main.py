@@ -1,13 +1,16 @@
 import pkgutil
 import asyncio
+from logging import Logger
 import os
 from random import randint
 from dotenv import load_dotenv
 load_dotenv()
 from meross_iot.http_api import MerossHttpClient
 from meross_iot.manager import MerossManager
-from interactions import Client, Intents
+from interactions import Client, Intents, logger_name
 
+logger_name = "ipy"
+print(__name__)
 EMAIL = os.environ.get('MEROSS_EMAIL')
 PASSWORD = os.environ.get('MEROSS_PASSWORD')
 
@@ -16,7 +19,7 @@ def main2():
     extension_names = [m.name for m in pkgutil.iter_modules(["exts"], prefix="exts.")]
     client = Client(
         token = os.environ.get("DISCORD_TOKEN"),
-        intents=Intents.ALL)
+        intents=Intents.ALL, logger=Logger(logger_name))
     
     for extension in extension_names:
         client.load_extension(extension)

@@ -2,17 +2,24 @@
   // These tasks will run in order when initializing your CodeSandbox project.
   "setupTasks": [
     {
-      "command": "pip install -r requirements.txt",
-      "name": "pip install -r requirements.txt"
+      "name": "pip install -r requirements.txt",
+      "command": "pip install -r requirements.txt"
     }
   ],
 
   // These tasks can be run from CodeSandbox. Running one will open a log in the app.
   "tasks": {
-    "python main.py": {
-      "name": "python main.py",
-      "command": "python main.py",
-      "runAtStart": true
+    "uvicorn main:app --reload": {
+      "name": "uvicorn main:app --reload",
+      "command": "uvicorn main:app --reload",
+      "runAtStart": true,
+      "preview": {
+        "port": 8000
+      }
+    },
+    "pip install -r requirements.txt": {
+      "name": "Install Dependencies",
+      "command": "pip install -r requirements.txt"
     }
   }
 }

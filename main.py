@@ -21,7 +21,7 @@ def main2():
     for extension in extension_names:
         client.load_extension(extension)
     # client.load_extension("utils.loggerservice.py", channel=1196038073897734164)
-        
+    print("Lancement du bot..")    
     client.start()
 
 main2()
